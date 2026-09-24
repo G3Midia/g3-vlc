@@ -100,7 +100,10 @@ object MediaUtils {
                     if (!deleteMedia(item, null)) onDeleteFailed.invoke(item)
                 }
             }
-            is Playlist -> Runnable { deletePlaylist(item) }
+            is Playlist -> Runnable {
+                deletePlaylist(item)
+                org.videolan.vlc.g3.G3Sync.deletePlaylistRemote(activity, item.id)
+            }
             else -> Runnable { onDeleteFailed.invoke(item) }
         }
 

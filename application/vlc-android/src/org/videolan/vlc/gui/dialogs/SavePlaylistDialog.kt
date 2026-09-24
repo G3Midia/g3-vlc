@@ -324,7 +324,9 @@ class SavePlaylistDialog : VLCBottomSheetDialogFragment(), View.OnClickListener,
             if (binding.replaceSwitch.isChecked) {
                 if (confirmed) {
                     val name = playlist.title
+                    val oldPlaylistId = playlist.id
                     playlist.delete()
+                    org.videolan.vlc.g3.G3Sync.deletePlaylistRemote(requireActivity(), oldPlaylistId)
                     val newPlaylist = medialibrary.createPlaylist(name, Settings.includeMissing, false)
                     newPlaylist.append(ids)
                 } else {
